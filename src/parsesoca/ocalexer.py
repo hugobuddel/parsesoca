@@ -31,7 +31,8 @@ class OCALexer(Lexer):
         '=', '{', '}', ';', '<', '>', '(', ')', ',',
     }
 
-    KEYWORD = r'[A-Z\.]+'
+    # A KEYWORD can also be a program name to execute.
+    KEYWORD = r'[A-Z\._]+'
     IF = r'if'
     THEN = r'then'
     EQUALS = r'=='

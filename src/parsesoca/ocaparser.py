@@ -37,9 +37,17 @@ class OCAParser(Parser):
     def clauses(self, p):
         return [p.clause]
 
-    @_('KEYWORD EQUALS STRING')
+    @_('KEYWORD EQUALS value')
     def clause(self, p):
-        return "==", p.KEYWORD, p.STRING
+        return "==", p.KEYWORD, p.value
+
+    @_('STRING')
+    def value(self, p):
+        return p.STRING
+
+    @_('NUMBER')
+    def value(self, p):
+        return p.NUMBER
 
     @_('KEYWORD LIKE STRING')
     def clause(self, p):
@@ -74,6 +82,10 @@ class OCAParser(Parser):
         return [p.organizer]
 
     @_('SELECT EXECUTE "(" KEYWORD ")" FROM FILE WHERE clauses GROUPBY keywords AS ASPART ";"')
+    def organizer(self, p):
+        return ("EXECUTE", p.KEYWORD, p.FILE, p.clauses, p.keywords)
+
+    @_('SELECT EXECUTE "(" KEYWORD ")" FROM FILE WHERE clauses GROUPBY keywords ";"')
     def organizer(self, p):
         return ("EXECUTE", p.KEYWORD, p.FILE, p.clauses, p.keywords)
 

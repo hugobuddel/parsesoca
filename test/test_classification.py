@@ -28,6 +28,8 @@ def test_classification():
       REFLEX.CATG = "REFERENCE_DARK";
     }
 
+    select execute(DETECTOR_NOISE_COMPUTATION) from inputFiles where RAW.TYPE == "DARK" and DET.NDIT==1 group by ARCFILE;
+
     select execute(DARKS) from inputFiles where RAW.TYPE=="DARK"
      group by DET.NCORRS.NAME,DET.DIT,DET.NDIT,TPL.START as (TPL_A,tpl);
     """
