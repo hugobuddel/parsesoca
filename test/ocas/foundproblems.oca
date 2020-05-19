@@ -35,6 +35,18 @@ if PRO.SATG == "QQ" then
   REFLEX.SATG=PRI.SATG;
 }
 
+// Based on efosc_spec, using !=
+if INS.SLIT.NAME!="slit#5.0" then
+{
+  RAW.TYPE = "SCREEN";
+}
+
+// Based on efosc_spec, using #
+if INS.SLIT.NAME=="slit#5.0" then
+{
+  RAW.TYPE = "SCREEN";
+}
+
 
 
 //ORGANIZATION

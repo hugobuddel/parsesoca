@@ -55,6 +55,10 @@ class OCAParser(Parser):
     def clause(self, p):
         return "==", p.KEYWORD, p.value
 
+    @_('KEYWORD NOTEQUALS value')
+    def clause(self, p):
+        return "!=", p.KEYWORD, p.value
+
     @_('STRING')
     def value(self, p):
         return p.STRING

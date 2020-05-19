@@ -15,6 +15,7 @@ class OCALexer(Lexer):
         IF,
         THEN,
         EQUALS,
+        NOTEQUALS,
         LIKE,
         AND,
         OR,
@@ -52,6 +53,7 @@ class OCALexer(Lexer):
     IF = r'if'
     THEN = r'then'
     EQUALS = r'=='
+    NOTEQUALS = r'!='
     LIKE = r'like'
     AND = r'and'
     OR = r'or'
@@ -85,7 +87,7 @@ class OCALexer(Lexer):
         t.value = int(t.value)
         return t
 
-    @_(r'"[A-Za-z0-9%_\.,]+"')
+    @_(r'"[A-Za-z0-9%_\.,#]+"')
     def STRING(self, t):
         t.value = str(t.value.strip('"'))
         return t
