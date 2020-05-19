@@ -17,6 +17,13 @@ if (DPR.CATG=="CALIB") and DPR.TYPE=="WAVE,3TEL" and (TPL.ID like "%std_acq%" or
 }
 
 
+// Based on cr2re_wkf
+if (T) then
+{
+   REFLEX.CATG="UNDEFINED";
+}
+
+
 //ORGANIZATION
 
 // From HAWKI, with AS

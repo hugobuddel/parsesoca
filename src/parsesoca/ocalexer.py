@@ -18,6 +18,7 @@ class OCALexer(Lexer):
         LIKE,
         AND,
         OR,
+        TRUE,
 
         SELECT,
         EXECUTE,
@@ -71,6 +72,9 @@ class OCALexer(Lexer):
     RECIPE = r'recipe'
     PRODUCT = r'product'
     RECIPENAME = r'[a-z][a-zA-Z0-9_]+'
+
+    // TODO: Also do FALSE?
+    TRUE = r'T'
 
     @_(r'[0-9]+')
     def NUMBER(self, t):

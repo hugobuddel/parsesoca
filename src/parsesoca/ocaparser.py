@@ -79,6 +79,11 @@ class OCAParser(Parser):
     def clause(self, p):
         return ">", p.KEYWORD, p.NUMBER
 
+    # Always True
+    @_('TRUE')
+    def clause(self, p):
+        return True
+
     @_('exprs expr')
     def exprs(self, p):
         return p.exprs + [p.expr]
