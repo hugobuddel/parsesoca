@@ -32,6 +32,7 @@ class OCALexer(Lexer):
         ASPART,
         INPUTFILES,
         CALIBFILES,
+        RAWFILES,
 
         ACTION,
         MINRET,
@@ -73,8 +74,10 @@ class OCALexer(Lexer):
     MINRET = r'minRet'
     MAXRET = r'maxRet'
     FILE = r'file'
+    # TODO: Perhaps refactor the input?
     INPUTFILES = r'inputFiles'
     CALIBFILES = r'calibFiles'
+    RAWFILES = r'rawFiles'
     RECIPE = r'recipe'
     PRODUCT = r'product'
     RECIPENAME = r'[a-z][a-zA-Z0-9_]+'

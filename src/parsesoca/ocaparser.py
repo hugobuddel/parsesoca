@@ -133,6 +133,10 @@ class OCAParser(Parser):
     def caliborinput(self, p):
         return p.CALIBFILES
 
+    @_('RAWFILES')
+    def caliborinput(self, p):
+        return p.RAWFILES
+
     @_('keywords "," KEYWORD')
     def keywords(self, p):
         return p.keywords + [p.KEYWORD]
