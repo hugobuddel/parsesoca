@@ -417,3 +417,5 @@ action SCIENCE_FRAMES
 
     myparser = OCAParser()
     pprint(myparser.parse(mylexer.tokenize(soca_clean)))
+    if hasattr(myparser, 'errorok'):
+        assert myparser.errorok, "Error"

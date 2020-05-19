@@ -17,6 +17,10 @@ class OCAParser(Parser):
     def file(self, p):
         return p.classifiers, p.organizers, p.actions
 
+    # @_('classifiers organizers')
+    # def file(self, p):
+    #     return p.classifiers, p.organizers
+
     @_('classifiers classifier')
     def classifiers(self, p):
         return p.classifiers + [p.classifier]
@@ -90,13 +94,17 @@ class OCAParser(Parser):
     def organizers(self, p):
         return [p.organizer]
 
-    @_('SELECT EXECUTE "(" KEYWORD ")" FROM caliborinput WHERE clauses GROUPBY keywords AS ASPART ";"')
+    @_('SELECT EXECUTE "(" keywordorrecipename ")" FROM caliborinput WHERE clauses GROUPBY keywords AS ASPART ";"')
     def organizer(self, p):
-        return ("EXECUTE", p.KEYWORD, p.clauses, p.keywords)
+        return ("EXECUTE", p.keywordorrecipename, p.clauses, p.keywords)
 
-    @_('SELECT EXECUTE "(" KEYWORD ")" FROM caliborinput WHERE clauses GROUPBY keywords ";"')
+    @_('SELECT EXECUTE "(" keywordorrecipename ")" FROM caliborinput WHERE clauses GROUPBY keywords ";"')
     def organizer(self, p):
-        return ("EXECUTE", p.KEYWORD, p.clauses, p.keywords)
+        return ("EXECUTE", p.keywordorrecipename, p.clauses, p.keywords)
+
+    @_('SELECT EXECUTE "(" keywordorrecipename ")" FROM caliborinput WHERE clauses ";"')
+    def organizer(self, p):
+        return ("EXECUTE", p.keywordorrecipename, p.clauses)
 
     @_('INPUTFILES')
     def caliborinput(self, p):
@@ -122,13 +130,38 @@ class OCAParser(Parser):
     def actions(self, p):
         return [p.action]
 
-    @_('ACTION KEYWORD "{" '
+    @_('ACTION keywordorrecipename "{" '
        'inputselects '
        'RECIPE RECIPENAME ";" '
        'outputproducts '
        '"}"')
     def action(self, p):
-        return p.KEYWORD, p.inputselects, p.RECIPENAME, p.outputproducts
+        return p.keywordorrecipename, p.inputselects, p.RECIPENAME, p.outputproducts
+
+    # Action without outputproducts, is this allowed? This means that the
+    # recipe does not produce anything.
+    @_('ACTION keywordorrecipename "{" '
+       'inputselects '
+       'RECIPE RECIPENAME ";" '
+       '"}"')
+    def action(self, p):
+        return p.keywordorrecipename, p.inputselects, p.RECIPENAME
+
+    # Action with only a recipe name.
+    @_('ACTION keywordorrecipename "{" '
+       'RECIPE RECIPENAME ";" '
+       '"}"')
+    def action(self, p):
+        return p.keywordorrecipename, p.RECIPENAME
+
+    # actions can look like recipe names or like keywords....
+    @_('KEYWORD')
+    def keywordorrecipename(self, p):
+        return p.KEYWORD
+
+    @_('RECIPENAME')
+    def keywordorrecipename(self, p):
+        return p.RECIPENAME
 
     @_('inputselects inputselect')
     def inputselects(self, p):
