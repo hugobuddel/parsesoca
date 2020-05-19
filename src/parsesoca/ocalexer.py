@@ -85,12 +85,12 @@ class OCALexer(Lexer):
     # TODO: Also do FALSE?
     TRUE = r'T'
 
-    @_(r'[0-9]+')
+    @_(r'[0-9-]+')
     def NUMBER(self, t):
         t.value = int(t.value)
         return t
 
-    @_(r'"[A-Za-z0-9%_\.,#]+"')
+    @_(r'"[A-Za-z0-9%_\.,#-]+"')
     def STRING(self, t):
         t.value = str(t.value.strip('"'))
         return t

@@ -1,4 +1,4 @@
-// From hawki, with ">" and a number
+// Based on hawki, with ">" and a number
 if DPR.CATG == "CALIB" and DPR.TECH == "IMAGE" and DPR.TYPE == "DARK"
   and INSTRUME like "%HAWKI%"
   and TPL.NEXP > 2 then
@@ -7,8 +7,18 @@ if DPR.CATG == "CALIB" and DPR.TECH == "IMAGE" and DPR.TYPE == "DARK"
   REFLEX.CATG = "DARK";
 }
 
-// From amber_wkf, with , in value
-if (DPR.CATG=="CALIB") and DPR.TYPE=="WAVE,3TEL" and (TPL.ID like "%std_acq%" or TPL.ID like "%p2vm%" or TPL.ID like "%P2VM%") then
+// Based on fors1, with - signs
+if DPR.CATG == "CALIB" and DPR.TECH == "IMAGE" and DPR.TYPE == "DARK"
+  and INSTRUME like "%HAWKI%"
+  and TPL.NEXP > -2 then
+{
+  RAW.TYPE = "DA-RK";
+  REFLEX.CATG = "DARK";
+}
+
+// Based on amber_wkf, with , in value, and or
+if (DPR.CATG=="CALIB") and DPR.TYPE=="WAVE,3TEL" and
+   (TPL.ID like "%p2vm%" or TPL.ID like "%P2VM%") then
 {
   RAW.TYPE="3P2V";
   DO.CATG="AMBER_3WAVE";
@@ -112,4 +122,12 @@ action ACTION_SCIENCE_FRINGE
 // recipe amber_SciCal { "--binning=1"; "--select=FALSE"; }
   recipe amber_SciCal ;
   product SCIENCE_REDUCED { PRO.CATG="SCIENCE_REDUCED"; }
+}
+
+// Based on eris_nix_basic.oca, no minRet and maxRet
+action ACTION_SCIENCE
+{
+  select file as GAIN from calibFiles where
+    REFLEX.CATG=="GAIN";
+  recipe abcd;
 }

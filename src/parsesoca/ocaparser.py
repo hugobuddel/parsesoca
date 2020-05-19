@@ -209,6 +209,12 @@ class OCAParser(Parser):
     def inputselect(self, p):
         return ("ACTION", p.MINRET, p.NUMBER0, p.MAXRET, p.NUMBER1, p.caliborinput)
 
+    # inputselect without minret and maxret
+    @_('SELECT FILE AS KEYWORD '
+       'FROM caliborinput WHERE clauses ";" ')
+    def inputselect(self, p):
+        return ("ACTION", -99, 99, p.caliborinput)
+
     @_('outputproducts outputproduct')
     def outputproducts(self, p):
         return p.outputproducts + [p.outputproduct]
