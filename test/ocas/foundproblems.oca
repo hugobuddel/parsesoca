@@ -57,6 +57,12 @@ if INS.SLIT.NAME=="slit#5.0" then
   RAW.TYPE = "SCREEN";
 }
 
+// Based on mime_fringe_wkf, with /
+if INS.SLIT.NAME=="OMEGACAM/1.60" then
+{
+  RAW.TYPE = "SCREEN";
+}
+
 // Based on midi_HIGH_SENS_wkf
 if PRO.CATG=="CALIB" then
 {
