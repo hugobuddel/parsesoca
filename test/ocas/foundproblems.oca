@@ -1,0 +1,32 @@
+if DPR.CATG == "CALIB" and DPR.TECH == "IMAGE" and DPR.TYPE == "DARK"
+  and INSTRUME like "%HAWKI%"
+  and TPL.NEXP > 2 then
+{
+  RAW.TYPE = "DARK";
+  REFLEX.CATG = "DARK";
+}
+
+
+//ORGANIZATION
+
+select execute(SKY_FLATS) from inputFiles where RAW.TYPE=="FLAT_TWILIGHT"
+  group by DET.NCORRS.NAME,DET.DIT,DET.NDIT,INS.FILT1.NAME,INS.FILT2.NAME,OBS.START as (TPL_A,tpl);
+
+select execute(DETECTOR_NOISE_COMPUTATION) from inputFiles where RAW.TYPE == "DARK" and DET.NDIT==1 group by ARCFILE;
+
+action DARKS
+{
+  minRet=0; maxRet=1;
+  select file as REFERENCE_DARK from inputFiles where
+    REFLEX.CATG=="REFERENCE_DARK"
+    and inputFile.DET.DIT==DET.DIT
+    and inputFile.DET.NDIT==DET.NDIT
+    and inputFile.DET.NCORRS.NAME==DET.NCORRS.NAME;
+
+  recipe hawki_dark_combine;
+
+  product MASTER_DARK { PRO.CATG="MASTER_DARK";}
+  product DIFFIMG_DARK { PRO.CATG="DIFFIMG_DARK";}
+  product DIFFIMG_STATS_DARK { PRO.CATG="DIFFIMG_STATS_DARK";}
+
+}
