@@ -117,9 +117,13 @@ class OCAParser(Parser):
     def actions(self, p):
         return [p.action]
 
-    @_('ACTION KEYWORD "{" inputselects "}"')
+    @_('ACTION KEYWORD "{" '
+       'inputselects '
+       'RECIPE RECIPENAME ";" '
+       'outputproducts '
+       '"}"')
     def action(self, p):
-        return p.KEYWORD, p.inputselects
+        return p.KEYWORD, p.inputselects, p.RECIPENAME, p.outputproducts
 
     @_('inputselects inputselect')
     def inputselects(self, p):
@@ -135,3 +139,15 @@ class OCAParser(Parser):
        'FROM caliborinput WHERE clauses ";" ')
     def inputselect(self, p):
         return ("ACTION", p.MINRET, p.NUMBER0, p.MAXRET, p.NUMBER1, p.caliborinput)
+
+    @_('outputproducts outputproduct')
+    def outputproducts(self, p):
+        return p.outputproducts + [p.outputproduct]
+
+    @_('outputproduct')
+    def outputproducts(self, p):
+        return [p.outputproduct]
+
+    @_('PRODUCT KEYWORD "{" exprs "}" ')
+    def outputproduct(self, p):
+        return p.KEYWORD, p.exprs
