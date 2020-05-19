@@ -52,8 +52,9 @@ class OCALexer(Lexer):
     # A KEYWORD can also be a program name to execute.
     # And can also be used in action clauses, e.g.
     #   inputFile.INS.FILT1.NAME == INS.FILT1.NAME
+    # "MJD-OBS" is also a keyword.
     # Perhaps this should be refactored?
-    KEYWORD = r'[A-Z][A-Z0-9\._]+|inputFile.[A-Z][A-Z0-9\._]+'
+    KEYWORD = r'MJD-OBS|[A-Z][A-Z0-9\._]+|inputFile.[A-Z][A-Z0-9\._]+'
     IF = r'if'
     THEN = r'then'
     EQUALS = r'=='
