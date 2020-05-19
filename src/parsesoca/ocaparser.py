@@ -37,6 +37,11 @@ class OCAParser(Parser):
     def clauses(self, p):
         return [p.clause]
 
+    # This does not work when there are OR clauses.
+    @_('"(" clauses ")"')
+    def clause(self, p):
+        return p.clauses
+
     @_('KEYWORD EQUALS value')
     def clause(self, p):
         return "==", p.KEYWORD, p.value
