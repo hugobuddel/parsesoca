@@ -25,8 +25,11 @@ def test_classification():
       DO.CLASS = "REFERENCE_DARK";
       REFLEX.CATG = "REFERENCE_DARK";
     }
-    """
 
+    select execute(DARKS) from inputFiles where RAW.TYPE=="DARK"
+     group by
+    """
+# DET.NCORRS.NAME,DET.DIT,DET.NDIT,TPL.START as (TPL_A,tpl);
     soca_clean = "\n".join(
         line for line in soca.splitlines()
         if not (line.strip() + "//").startswith("//")

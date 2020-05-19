@@ -13,6 +13,10 @@ class OCAParser(Parser):
     def __init__(self):
         self.names = {}
 
+    @_('classifiers organizers')
+    def file(self, p):
+        return p.classifiers, p.organizers
+
     @_('classifiers classifier')
     def classifiers(self, p):
         return p.classifiers + [p.classifier]
@@ -60,3 +64,15 @@ class OCAParser(Parser):
     @_('KEYWORD "=" STRING ";"')
     def expr(self, p):
         return "=", p.KEYWORD, p.STRING
+
+    @_('organizers organizer')
+    def organizers(self, p):
+        return p.organizers + [p.organizer]
+
+    @_('organizer')
+    def organizers(self, p):
+        return [p.organizer]
+
+    @_('SELECT EXECUTE "(" KEYWORD ")" FROM FILE WHERE clauses GROUPBY')
+    def organizer(self, p):
+        return (p.KEYWORD, p.FILE, p.clauses)

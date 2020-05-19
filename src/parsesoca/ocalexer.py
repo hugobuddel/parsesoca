@@ -17,9 +17,18 @@ class OCALexer(Lexer):
         EQUALS,
         LIKE,
         AND,
+
+        SELECT,
+        EXECUTE,
+        FROM,
+        WHERE,
+        GROUPBY,
+        AS,
+        ASPART,
+        FILE,
     }
     literals = {
-        '=', '{', '}', ';', '<', '>',
+        '=', '{', '}', ';', '<', '>', '(', ')', ',',
     }
 
     KEYWORD = r'[A-Z\.]+'
@@ -28,6 +37,16 @@ class OCALexer(Lexer):
     EQUALS = r'=='
     LIKE = r'like'
     AND = r'and'
+
+    SELECT = r'select'
+    EXECUTE = r'execute'
+    FROM = r'from'
+    WHERE = r'where'
+    GROUPBY = r'group[ ]+by'
+    AS = r'as'
+    # TODO: figure out what the AS clause actually means.
+    ASPART = r'\(TPL_A,tpl\)'
+    FILE = r'[a-z][a-zA-Z]+'
 
     @_(r'[0-9]+')
     def NUMBER(self, t):
