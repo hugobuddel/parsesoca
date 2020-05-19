@@ -59,6 +59,14 @@ class OCAParser(Parser):
     def clause(self, p):
         return "!=", p.KEYWORD, p.value
 
+    @_('KEYWORD LESSEQUALS value')
+    def clause(self, p):
+        return "<=", p.KEYWORD, p.value
+
+    @_('KEYWORD GREATEREQUALS value')
+    def clause(self, p):
+        return ">=", p.KEYWORD, p.value
+
     @_('STRING')
     def value(self, p):
         return p.STRING
@@ -179,6 +187,7 @@ class OCAParser(Parser):
     def actions(self, p):
         return [p.action]
 
+    # TODO: Allow for multiple recipes in one action? E.g. molecfit
     @_('ACTION keywordorrecipename "{" '
        'inputselects '
        'RECIPE RECIPENAME ";" '
@@ -245,6 +254,7 @@ class OCAParser(Parser):
         return ("ACTION", p.NUMBER0, p.NUMBER1, p.caliborinput)
 
     # inputselect with only minret
+    # TODO: moons_wkf does not have the ";" everywhere
     @_('MINRET "=" NUMBER ";" '
        'SELECT FILE AS KEYWORD '
        'FROM caliborinput WHERE clauses ";" ')

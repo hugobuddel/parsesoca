@@ -16,6 +16,8 @@ class OCALexer(Lexer):
         THEN,
         EQUALS,
         NOTEQUALS,
+        LESSEQUALS,
+        GREATEREQUALS,
         LIKE,
         AND,
         OR,
@@ -56,6 +58,8 @@ class OCALexer(Lexer):
     THEN = r'then'
     EQUALS = r'=='
     NOTEQUALS = r'!='
+    LESSEQUALS = r'<='
+    GREATEREQUALS = r'>='
     LIKE = r'like'
     AND = r'and'
     OR = r'or'
