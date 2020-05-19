@@ -117,15 +117,37 @@ class OCAParser(Parser):
     def organizers(self, p):
         return [p.organizer]
 
-    @_('SELECT EXECUTE "(" keywordorrecipename ")" FROM caliborinput WHERE clauses GROUPBY keywords AS ASPART ";"')
+    @_('SELECT EXECUTE "(" keywordorrecipename ")" '
+       'FROM caliborinput '
+       'WHERE clauses GROUPBY keywords AS ASPART ";"')
     def organizer(self, p):
         return ("EXECUTE", p.keywordorrecipename, p.clauses, p.keywords)
 
-    @_('SELECT EXECUTE "(" keywordorrecipename ")" FROM caliborinput WHERE clauses GROUPBY keywords ";"')
+    # With a minRet, ignore it.
+    @_('MINRET "=" NUMBER ";" '
+       'SELECT EXECUTE "(" keywordorrecipename ")" '
+       'FROM caliborinput '
+       'WHERE clauses GROUPBY keywords AS ASPART ";"')
     def organizer(self, p):
         return ("EXECUTE", p.keywordorrecipename, p.clauses, p.keywords)
 
-    @_('SELECT EXECUTE "(" keywordorrecipename ")" FROM caliborinput WHERE clauses ";"')
+    # With a minRet, ignore it.
+    @_('MINRET "=" NUMBER ";" '
+       'SELECT EXECUTE "(" keywordorrecipename ")" '
+       'FROM caliborinput '
+       'WHERE clauses GROUPBY keywords ";"')
+    def organizer(self, p):
+        return ("EXECUTE", p.keywordorrecipename, p.clauses, p.keywords)
+
+    @_('SELECT EXECUTE "(" keywordorrecipename ")" '
+       'FROM caliborinput '
+       'WHERE clauses GROUPBY keywords ";"')
+    def organizer(self, p):
+        return ("EXECUTE", p.keywordorrecipename, p.clauses, p.keywords)
+
+    @_('SELECT EXECUTE "(" keywordorrecipename ")" '
+       'FROM caliborinput '
+       'WHERE clauses ";"')
     def organizer(self, p):
         return ("EXECUTE", p.keywordorrecipename, p.clauses)
 

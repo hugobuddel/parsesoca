@@ -85,6 +85,15 @@ select execute(NOISE_COMPUTATION) from inputFiles where
 select execute(NOISE_COMPUTATION) from inputFiles where
     RAW.TYPE == "Norma III";
 
+// Based on kmos_wkf, minRet in select execute
+// TODO: does this even make sense?
+minRet=3;
+select execute(DARK) from inputFiles where RAW.TYPE=="DARK"
+    group by TPL.START ;
+
+
+
+
 // Based on HAWKI, normal action
 action DARKS
 {
