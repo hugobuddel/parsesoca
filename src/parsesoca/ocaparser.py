@@ -88,6 +88,10 @@ class OCAParser(Parser):
     def clause(self, p):
         return "IS_TSTRING", p.KEYWORD
 
+    @_('KEYWORD IS TUNDEFINED')
+    def clause(self, p):
+        return "IS_TUNDEFINED", p.KEYWORD
+
     # Always True
     @_('TRUE')
     def clause(self, p):

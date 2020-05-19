@@ -22,6 +22,7 @@ class OCALexer(Lexer):
         TRUE,
         IS,
         TSTRING,
+        TUNDEFINED,
 
         SELECT,
         EXECUTE,
@@ -60,6 +61,7 @@ class OCALexer(Lexer):
     OR = r'or'
     IS = r'is'
     TSTRING = r'string'
+    TUNDEFINED = r'undefined'
 
     SELECT = r'select'
     EXECUTE = r'execute'

@@ -61,14 +61,19 @@ if INS.SLIT.NAME=="slit#5.0" then
 
 //ORGANIZATION
 
-// From HAWKI, with AS
+// Based on HAWKI, with AS
 select execute(SKY_FLATS) from rawFiles where RAW.TYPE=="FLAT_TWILIGHT"
   group by DET.NCORRS.NAME,DET.DIT,INS.FILT2.NAME,OBS.START as (TPL_A,tpl);
 
-// From HAWKI, without AS
-select execute(DETECTOR_NOISE_COMPUTATION) from inputFiles where RAW.TYPE == "DARK" and DET.NDIT==1 group by ARCFILE;
+// Based on HAWKI, without AS
+select execute(NOISE_COMPUTATION) from inputFiles where
+    RAW.TYPE == "DARK" and DET.NDIT==1 group by ARCFILE;
 
-// From HAWKI, normal action
+// Based on fors_imaging_wkf, with is undefined
+select execute(NOISE_COMPUTATION) from inputFiles where
+    RAW.TYPE is undefined;
+
+// Based on HAWKI, normal action
 action DARKS
 {
   minRet=0; maxRet=1;
