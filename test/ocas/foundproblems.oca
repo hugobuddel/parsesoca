@@ -73,6 +73,10 @@ select execute(NOISE_COMPUTATION) from inputFiles where
 select execute(NOISE_COMPUTATION) from inputFiles where
     RAW.TYPE is undefined;
 
+// Based on fors_pmos_wkf, with space
+select execute(NOISE_COMPUTATION) from inputFiles where
+    RAW.TYPE == "Norma III";
+
 // Based on HAWKI, normal action
 action DARKS
 {
