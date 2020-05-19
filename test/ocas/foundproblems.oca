@@ -31,7 +31,7 @@ action DARKS
 
 }
 
-// from 4most_wkf, has a "." in a value
+// from 4most_wkf, has a "." in a value, and no inputselection
 action ACTION_CALIB_IMG
 {
 

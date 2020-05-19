@@ -143,6 +143,14 @@ class OCAParser(Parser):
     def action(self, p):
         return p.keywordorrecipename, p.inputselects, p.RECIPENAME, p.outputproducts
 
+    # Action without inputselects.
+    @_('ACTION keywordorrecipename "{" '
+       'RECIPE RECIPENAME ";" '
+       'outputproducts '
+       '"}"')
+    def action(self, p):
+        return p.keywordorrecipename, p.RECIPENAME, p.outputproducts
+
     # Action without outputproducts, is this allowed? This means that the
     # recipe does not produce anything.
     @_('ACTION keywordorrecipename "{" '
