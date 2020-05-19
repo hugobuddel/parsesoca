@@ -7,10 +7,10 @@ if DPR.CATG == "CALIB" and DPR.TECH == "IMAGE" and DPR.TYPE == "DARK"
   REFLEX.CATG = "DARK";
 }
 
-// Based on fors1, with - signs
+// Based on fors1, with - signs, .
 if DPR.CATG == "CALIB" and DPR.TECH == "IMAGE" and DPR.TYPE == "DARK"
   and INSTRUME like "%HAWKI%"
-  and TPL.NEXP > -2 then
+  and TPL.NEXP > -.2 then
 {
   RAW.TYPE = "DA-RK";
   REFLEX.CATG = "DARK";

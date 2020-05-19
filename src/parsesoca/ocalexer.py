@@ -85,9 +85,11 @@ class OCALexer(Lexer):
     # TODO: Also do FALSE?
     TRUE = r'T'
 
-    @_(r'[0-9-]+')
+    # From https://stackoverflow.com/a/12643073/2097
+    @_(r'[+-]?([0-9]*[.])?[0-9]+')
     def NUMBER(self, t):
-        t.value = int(t.value)
+        # TODO: distinguish int and float?
+        t.value = float(t.value)
         return t
 
     @_(r'"[A-Za-z0-9%_\.,#-]+"')
