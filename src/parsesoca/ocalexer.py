@@ -3,6 +3,7 @@
 from sly import Lexer
 
 
+# noinspection PyUnresolvedReferences,PyPep8Naming
 class OCALexer(Lexer):
     """Lexer for OCA files."""
 

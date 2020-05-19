@@ -35,19 +35,19 @@ class OCAParser(Parser):
 
     @_('KEYWORD EQUALS STRING')
     def clause(self, p):
-        return ("==", p.KEYWORD, p.STRING)
+        return "==", p.KEYWORD, p.STRING
 
     @_('KEYWORD LIKE STRING')
     def clause(self, p):
-        return ("LIKE", p.KEYWORD, p.STRING)
+        return "LIKE", p.KEYWORD, p.STRING
 
     @_('KEYWORD "<" NUMBER')
     def clause(self, p):
-        return ("<", p.KEYWORD, p.NUMBER)
+        return "<", p.KEYWORD, p.NUMBER
 
     @_('KEYWORD ">" NUMBER')
     def clause(self, p):
-        return (">", p.KEYWORD, p.NUMBER)
+        return ">", p.KEYWORD, p.NUMBER
 
     @_('exprs expr')
     def exprs(self, p):
@@ -59,5 +59,4 @@ class OCAParser(Parser):
 
     @_('KEYWORD "=" STRING ";"')
     def expr(self, p):
-        return ("=", p.KEYWORD, p.STRING)
-
+        return "=", p.KEYWORD, p.STRING
