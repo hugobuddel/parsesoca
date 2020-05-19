@@ -160,3 +160,13 @@ action ACTION_SCIENCE
     REFLEX.CATG=="GAIN";
   recipe abcd;
 }
+
+
+// Based on IFS, only minRet
+action ACTION_SCIENCE
+{
+  minRet=2;
+  select file as GAIN from calibFiles where
+    REFLEX.CATG=="GAIN";
+  recipe abcd;
+}

@@ -220,7 +220,14 @@ class OCAParser(Parser):
        'SELECT FILE AS KEYWORD '
        'FROM caliborinput WHERE clauses ";" ')
     def inputselect(self, p):
-        return ("ACTION", p.MINRET, p.NUMBER0, p.MAXRET, p.NUMBER1, p.caliborinput)
+        return ("ACTION", p.NUMBER0, p.NUMBER1, p.caliborinput)
+
+    # inputselect with only minret
+    @_('MINRET "=" NUMBER ";" '
+       'SELECT FILE AS KEYWORD '
+       'FROM caliborinput WHERE clauses ";" ')
+    def inputselect(self, p):
+        return ("ACTION", p.NUMBER, 99, p.caliborinput)
 
     # inputselect without minret and maxret
     @_('SELECT FILE AS KEYWORD '
