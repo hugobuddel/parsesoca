@@ -77,7 +77,7 @@ class OCALexer(Lexer):
         t.value = int(t.value)
         return t
 
-    @_(r'"[A-Za-z0-9%_]+"')
+    @_(r'"[A-Za-z0-9%_\.]+"')
     def STRING(self, t):
         t.value = str(t.value.strip('"'))
         return t
