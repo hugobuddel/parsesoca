@@ -73,6 +73,14 @@ class OCAParser(Parser):
     def organizers(self, p):
         return [p.organizer]
 
-    @_('SELECT EXECUTE "(" KEYWORD ")" FROM FILE WHERE clauses GROUPBY')
+    @_('SELECT EXECUTE "(" KEYWORD ")" FROM FILE WHERE clauses GROUPBY keywords AS ASPART ";"')
     def organizer(self, p):
-        return (p.KEYWORD, p.FILE, p.clauses)
+        return ("EXECUTE", p.KEYWORD, p.FILE, p.clauses, p.keywords)
+
+    @_('keywords "," KEYWORD')
+    def keywords(self, p):
+        return p.keywords + [p.KEYWORD]
+
+    @_('KEYWORD')
+    def keywords(self, p):
+        return [p.KEYWORD]

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """Test classification."""
 
+from pprint import pprint
+
 from parsesoca.ocalexer import OCALexer
 from parsesoca.ocaparser import OCAParser
 
@@ -27,9 +29,9 @@ def test_classification():
     }
 
     select execute(DARKS) from inputFiles where RAW.TYPE=="DARK"
-     group by
+     group by DET.NCORRS.NAME,DET.DIT,DET.NDIT,TPL.START as (TPL_A,tpl);
     """
-# DET.NCORRS.NAME,DET.DIT,DET.NDIT,TPL.START as (TPL_A,tpl);
+
     soca_clean = "\n".join(
         line for line in soca.splitlines()
         if not (line.strip() + "//").startswith("//")
@@ -40,4 +42,4 @@ def test_classification():
         print(token)
 
     myparser = OCAParser()
-    print(myparser.parse(mylexer.tokenize(soca_clean)))
+    pprint(myparser.parse(mylexer.tokenize(soca_clean)))
