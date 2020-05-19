@@ -37,11 +37,16 @@ class OCAParser(Parser):
     def clauses(self, p):
         return p.clauses + [p.clause]
 
+    # TODO: treat OR differently than AND
+    @_('clauses OR clause')
+    def clauses(self, p):
+        return p.clauses + [p.clause]
+
     @_('clause')
     def clauses(self, p):
         return [p.clause]
 
-    # This does not work when there are OR clauses.
+    # TODO: This does not work when there are OR clauses.
     @_('"(" clauses ")"')
     def clause(self, p):
         return p.clauses

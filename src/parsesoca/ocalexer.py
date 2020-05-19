@@ -17,6 +17,7 @@ class OCALexer(Lexer):
         EQUALS,
         LIKE,
         AND,
+        OR,
 
         SELECT,
         EXECUTE,
@@ -50,6 +51,7 @@ class OCALexer(Lexer):
     EQUALS = r'=='
     LIKE = r'like'
     AND = r'and'
+    OR = r'or'
 
     SELECT = r'select'
     EXECUTE = r'execute'
