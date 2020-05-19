@@ -13,9 +13,9 @@ class OCAParser(Parser):
     def __init__(self):
         self.names = {}
 
-    @_('classifiers organizers')
+    @_('classifiers organizers actions')
     def file(self, p):
-        return p.classifiers, p.organizers
+        return p.classifiers, p.organizers, p.actions
 
     @_('classifiers classifier')
     def classifiers(self, p):
@@ -49,6 +49,10 @@ class OCAParser(Parser):
     def value(self, p):
         return p.NUMBER
 
+    @_('KEYWORD')
+    def value(self, p):
+        return p.KEYWORD
+
     @_('KEYWORD LIKE STRING')
     def clause(self, p):
         return "LIKE", p.KEYWORD, p.STRING
@@ -81,13 +85,21 @@ class OCAParser(Parser):
     def organizers(self, p):
         return [p.organizer]
 
-    @_('SELECT EXECUTE "(" KEYWORD ")" FROM FILE WHERE clauses GROUPBY keywords AS ASPART ";"')
+    @_('SELECT EXECUTE "(" KEYWORD ")" FROM caliborinput WHERE clauses GROUPBY keywords AS ASPART ";"')
     def organizer(self, p):
-        return ("EXECUTE", p.KEYWORD, p.FILE, p.clauses, p.keywords)
+        return ("EXECUTE", p.KEYWORD, p.clauses, p.keywords)
 
-    @_('SELECT EXECUTE "(" KEYWORD ")" FROM FILE WHERE clauses GROUPBY keywords ";"')
+    @_('SELECT EXECUTE "(" KEYWORD ")" FROM caliborinput WHERE clauses GROUPBY keywords ";"')
     def organizer(self, p):
-        return ("EXECUTE", p.KEYWORD, p.FILE, p.clauses, p.keywords)
+        return ("EXECUTE", p.KEYWORD, p.clauses, p.keywords)
+
+    @_('INPUTFILES')
+    def caliborinput(self, p):
+        return p.INPUTFILES
+
+    @_('CALIBFILES')
+    def caliborinput(self, p):
+        return p.CALIBFILES
 
     @_('keywords "," KEYWORD')
     def keywords(self, p):
@@ -96,3 +108,30 @@ class OCAParser(Parser):
     @_('KEYWORD')
     def keywords(self, p):
         return [p.KEYWORD]
+
+    @_('actions action')
+    def actions(self, p):
+        return p.actions + [p.action]
+
+    @_('action')
+    def actions(self, p):
+        return [p.action]
+
+    @_('ACTION KEYWORD "{" inputselects "}"')
+    def action(self, p):
+        return p.KEYWORD, p.inputselects
+
+    @_('inputselects inputselect')
+    def inputselects(self, p):
+        return p.inputselects + [p.inputselect]
+
+    @_('inputselect')
+    def inputselects(self, p):
+        return [p.inputselect]
+
+    @_('MINRET "=" NUMBER ";" '
+       'MAXRET "=" NUMBER ";" '
+       'SELECT FILE AS KEYWORD '
+       'FROM caliborinput WHERE clauses ";" ')
+    def inputselect(self, p):
+        return ("ACTION", p.MINRET, p.NUMBER0, p.MAXRET, p.NUMBER1, p.caliborinput)

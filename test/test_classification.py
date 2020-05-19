@@ -32,7 +32,53 @@ def test_classification():
 
     select execute(DARKS) from inputFiles where RAW.TYPE=="DARK"
      group by DET.NCORRS.NAME,DET.DIT,DET.NDIT,TPL.START as (TPL_A,tpl);
+
+    action SKY_FLATS
+    {
+      // Select appropriate reference flat, if available
+      minRet=0; maxRet=1;
+      select file as REFERENCE_TWILIGHT_FLAT from inputFiles where
+        REFLEX.CATG=="REFERENCE_TWILIGHT_FLAT"
+        and inputFile.INS.FILT1.NAME==INS.FILT1.NAME
+        and inputFile.INS.FILT2.NAME==INS.FILT2.NAME
+        and inputFile.DET.NCORRS.NAME==DET.NCORRS.NAME;
+      
+      minRet = 1; maxRet = 1;
+      select file as MASTER_DARK from calibFiles where
+         PRO.CATG=="MASTER_DARK"
+         and inputFile.DET.DIT==DET.DIT;
+
+    }
+     
     """
+
+    x = """
+    action SKY_FLATS
+    {
+    
+      // Select appropriate reference flat, if available
+      minRet=0; maxRet=1;
+      select file as REFERENCE_TWILIGHT_FLAT from inputFiles where
+        REFLEX.CATG=="REFERENCE_TWILIGHT_FLAT"
+        and inputFile.INS.FILT1.NAME==INS.FILT1.NAME
+        and inputFile.INS.FILT2.NAME==INS.FILT2.NAME
+        and inputFile.DET.NCORRS.NAME==DET.NCORRS.NAME;
+    
+      minRet = 1; maxRet = 1;
+      select file as MASTER_DARK from calibFiles where
+         PRO.CATG=="MASTER_DARK"
+         and inputFile.DET.DIT==DET.DIT;
+      
+      recipe hawki_twilight_flat_combine;
+    
+      product MASTER_TWILIGHT_FLAT { PRO.CATG="MASTER_TWILIGHT_FLAT";}
+      product MASTER_CONF { PRO.CATG="MASTER_CONF";}
+      product MASTER_BPM { PRO.CATG="MASTER_BPM";}
+      product RATIOIMG_TWILIGHT_FLAT {PRO.CATG="RATIOIMG_TWILIGHT_FLAT";}
+      product RATIOIMG_STATS_TWILIGHT_FLAT {PRO.CATG="RATIOIMG_STATS_TWILIGHT_FLAT";}
+    }
+    """
+
 
     soca_clean = "\n".join(
         line for line in soca.splitlines()
