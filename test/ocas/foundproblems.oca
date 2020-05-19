@@ -95,7 +95,19 @@ action DARKS
 
 }
 
-// from 4most_wkf, has a "." in a value, and no inputselection
+// Based on giraf_wkf, different order
+action DARKS
+{
+  minRet=0; maxRet=1;
+  select file as REFERENCE_DARK from inputFiles where
+    REFLEX.CATG=="REFERENCE_DARK";
+
+  product MASTER_DARK { PRO.CATG="MASTER_DARK";}
+
+  recipe hawki_dark_combine;
+}
+
+// Based on 4most_wkf, has a "." in a value, and no inputselection
 action ACTION_CALIB_IMG
 {
 
