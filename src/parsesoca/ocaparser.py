@@ -79,6 +79,11 @@ class OCAParser(Parser):
     def clause(self, p):
         return ">", p.KEYWORD, p.NUMBER
 
+    # TODO: generalize to any type?
+    @_('KEYWORD IS TSTRING')
+    def clause(self, p):
+        return "IS_TSTRING", p.KEYWORD
+
     # Always True
     @_('TRUE')
     def clause(self, p):
@@ -92,9 +97,9 @@ class OCAParser(Parser):
     def exprs(self, p):
         return [p.expr]
 
-    @_('KEYWORD "=" STRING ";"')
+    @_('KEYWORD "=" value ";"')
     def expr(self, p):
-        return "=", p.KEYWORD, p.STRING
+        return "=", p.KEYWORD, p.value
 
     @_('organizers organizer')
     def organizers(self, p):
@@ -207,3 +212,6 @@ class OCAParser(Parser):
     @_('PRODUCT KEYWORD "{" exprs "}" ')
     def outputproduct(self, p):
         return p.KEYWORD, p.exprs
+
+    def error(self, token):
+        raise ValueError(token)

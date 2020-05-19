@@ -17,11 +17,24 @@ if (DPR.CATG=="CALIB") and DPR.TYPE=="WAVE,3TEL" and (TPL.ID like "%std_acq%" or
 }
 
 
-// Based on cr2re_wkf
+// Based on cr2re_wkf. Ensures that REFLEX.CATG is always set to something.
 if (T) then
 {
    REFLEX.CATG="UNDEFINED";
 }
+
+// Based on cr2re_wkf. Test on types
+if PRO.SATG is string then
+{
+  REFLEX.SATG="ABCD";
+}
+
+// Based on cr2re_wkf. Use keyword as value.
+if PRO.SATG == "QQ" then
+{
+  REFLEX.SATG=PRI.SATG;
+}
+
 
 
 //ORGANIZATION

@@ -19,6 +19,8 @@ class OCALexer(Lexer):
         AND,
         OR,
         TRUE,
+        IS,
+        TSTRING,
 
         SELECT,
         EXECUTE,
@@ -53,6 +55,8 @@ class OCALexer(Lexer):
     LIKE = r'like'
     AND = r'and'
     OR = r'or'
+    IS = r'is'
+    TSTRING = r'string'
 
     SELECT = r'select'
     EXECUTE = r'execute'
@@ -73,7 +77,7 @@ class OCALexer(Lexer):
     PRODUCT = r'product'
     RECIPENAME = r'[a-z][a-zA-Z0-9_]+'
 
-    // TODO: Also do FALSE?
+    # TODO: Also do FALSE?
     TRUE = r'T'
 
     @_(r'[0-9]+')
