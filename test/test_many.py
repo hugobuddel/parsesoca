@@ -18,8 +18,8 @@ def do_test_oca_file(fn_oca):
     )
 
     mylexer = OCALexer()
-    for token in mylexer.tokenize(soca_clean):
-        print(token)
+    # for token in mylexer.tokenize(soca_clean):
+    #     print(token)
 
     myparser = OCAParser()
     pprint(myparser.parse(mylexer.tokenize(soca_clean)))
