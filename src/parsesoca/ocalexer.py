@@ -70,14 +70,14 @@ class OCALexer(Lexer):
     CALIBFILES = r'calibFiles'
     RECIPE = r'recipe'
     PRODUCT = r'product'
-    RECIPENAME = r'[a-z][a-z0-9_]+'
+    RECIPENAME = r'[a-z][a-zA-Z0-9_]+'
 
     @_(r'[0-9]+')
     def NUMBER(self, t):
         t.value = int(t.value)
         return t
 
-    @_(r'"[A-Za-z0-9%_\.]+"')
+    @_(r'"[A-Za-z0-9%_\.,]+"')
     def STRING(self, t):
         t.value = str(t.value.strip('"'))
         return t

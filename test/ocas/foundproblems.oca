@@ -1,3 +1,4 @@
+// From hawki, with ">" and a number
 if DPR.CATG == "CALIB" and DPR.TECH == "IMAGE" and DPR.TYPE == "DARK"
   and INSTRUME like "%HAWKI%"
   and TPL.NEXP > 2 then
@@ -6,14 +7,26 @@ if DPR.CATG == "CALIB" and DPR.TECH == "IMAGE" and DPR.TYPE == "DARK"
   REFLEX.CATG = "DARK";
 }
 
+// From amber_wkf, with , in value
+if (DPR.CATG=="CALIB") and DPR.TYPE=="WAVE,3TEL" and (TPL.ID like "%std_acq%" or TPL.ID like "%p2vm%" or TPL.ID like "%P2VM%") then
+{
+  RAW.TYPE="3P2V";
+  DO.CATG="AMBER_3WAVE";
+  PACK.DIR="P2VM";
+  CATG="CALIB";
+}
+
 
 //ORGANIZATION
 
+// From HAWKI, with AS
 select execute(SKY_FLATS) from inputFiles where RAW.TYPE=="FLAT_TWILIGHT"
   group by DET.NCORRS.NAME,DET.DIT,DET.NDIT,INS.FILT1.NAME,INS.FILT2.NAME,OBS.START as (TPL_A,tpl);
 
+// From HAWKI, without AS
 select execute(DETECTOR_NOISE_COMPUTATION) from inputFiles where RAW.TYPE == "DARK" and DET.NDIT==1 group by ARCFILE;
 
+// From HAWKI, normal action
 action DARKS
 {
   minRet=0; maxRet=1;
@@ -40,4 +53,31 @@ product IMG_CALIBRATED {
     REFLEX.CATG = "IMG_CALIBRATED";
     PRO.CATG = "IMG_CALIBRATED";
     PRO.EXT="tpl_0000.fits";}
+}
+
+// Based on amber_wkf, equation in selection.
+// TODO: Support
+action ACTION_SCIENCE_FRINGE
+{
+  minRet=1; maxRet=1;
+  select file as P2VM_REDUCED from calibFiles where
+    DO.CATG=="P2VM_REDUCED"
+//    and (inputFile.MJD-OBS - MJD-OBS) < 0.30 and (inputFile.MJD-OBS - MJD-OBS) > 0.0
+  ;
+
+ recipe amber_SciCal ;
+  product SCIENCE_REDUCED { PRO.CATG="SCIENCE_REDUCED"; }
+}
+
+// Based on amber_wkf, uses parameters.
+// TODO: support
+action ACTION_SCIENCE_FRINGE
+{
+  minRet=1; maxRet=1;
+  select file as P2VM_REDUCED from calibFiles where
+    DO.CATG=="P2VM_REDUCED";
+
+// recipe amber_SciCal { "--binning=1"; "--select=FALSE"; }
+  recipe amber_SciCal ;
+  product SCIENCE_REDUCED { PRO.CATG="SCIENCE_REDUCED"; }
 }
