@@ -9,6 +9,14 @@ def test_classification():
     """Test classification."""
 
     soca = """
+    if DPR.CATG == "CALIB" and DPR.TECH == "IMAGE" and DPR.TYPE == "DARK"
+      and INSTRUME like "%HAWKI%"
+      and TPL.NEXP > 2 then
+    {
+      RAW.TYPE = "DARK";
+      REFLEX.CATG = "DARK";
+    }
+
     if PRO.CATG == "REFERENCE_DARK" and INSTRUME like "%HAWKI%" then
     {
       DO.CATG  = "REFERENCE_DARK";

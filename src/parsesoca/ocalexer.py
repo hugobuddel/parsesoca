@@ -10,6 +10,7 @@ class OCALexer(Lexer):
     tokens = {
         KEYWORD,
         STRING,
+        NUMBER,
         IF,
         THEN,
         EQUALS,
@@ -17,7 +18,7 @@ class OCALexer(Lexer):
         AND,
     }
     literals = {
-        '=', '{', '}', ';',
+        '=', '{', '}', ';', '<', '>',
     }
 
     KEYWORD = r'[A-Z\.]+'
@@ -26,6 +27,11 @@ class OCALexer(Lexer):
     EQUALS = r'=='
     LIKE = r'like'
     AND = r'and'
+
+    @_(r'[0-9]+')
+    def NUMBER(self, t):
+        t.value = int(t.value)
+        return t
 
     @_(r'"[A-Z%_]+"')
     def STRING(self, t):

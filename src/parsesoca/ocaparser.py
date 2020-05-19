@@ -13,8 +13,16 @@ class OCAParser(Parser):
     def __init__(self):
         self.names = {}
 
+    @_('classifiers classifier')
+    def classifiers(self, p):
+        return p.classifiers + [p.classifier]
+
+    @_('classifier')
+    def classifiers(self, p):
+        return [p.classifier]
+
     @_('IF clauses THEN "{" exprs "}"')
-    def statement(self, p):
+    def classifier(self, p):
         return p.clauses, p.exprs
 
     @_('clauses AND clause')
@@ -32,6 +40,14 @@ class OCAParser(Parser):
     @_('KEYWORD LIKE STRING')
     def clause(self, p):
         return ("LIKE", p.KEYWORD, p.STRING)
+
+    @_('KEYWORD "<" NUMBER')
+    def clause(self, p):
+        return ("<", p.KEYWORD, p.NUMBER)
+
+    @_('KEYWORD ">" NUMBER')
+    def clause(self, p):
+        return (">", p.KEYWORD, p.NUMBER)
 
     @_('exprs expr')
     def exprs(self, p):
