@@ -19,6 +19,7 @@ class OCALexer(Lexer):
         LESSEQUALS,
         GREATEREQUALS,
         QEQUALS,
+        BETWEEN,
         LIKE,
         AND,
         OR,
@@ -71,6 +72,9 @@ class OCALexer(Lexer):
     IS = r'is'
     TSTRING = r'string'
     TUNDEFINED = r'undefined'
+
+    # TODO distinguish?
+    BETWEEN = r'(tryB|b)etween'
 
     SELECT = r'select'
     EXECUTE = r'execute'

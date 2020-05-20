@@ -46,6 +46,10 @@ class OCAParser(Parser):
     def clauses(self, p):
         return [p.clause]
 
+    @_('expr BETWEEN expr AND expr')
+    def clause(self, p):
+        return p.BETWEEN, p.expr0, p.expr1, p.expr2
+
     # TODO: This does not work when there are OR clauses.
     @_('"(" clauses ")"')
     def clause(self, p):

@@ -259,3 +259,18 @@ action ACTION_SCIENCE
     REFLEX.CATG=="GAIN";
   recipe abcd;
 }
+
+// From kmos_wkf, with between and trybetween
+action FLAT
+{
+    minRet = 1; maxRet = 1;
+    select file as BADPIXEL from calibFiles where
+        PRO.CATG=="BADPIXEL"
+        and MJD-OBS between inputFile.MJD-OBS - 14.0 and inputFile.MJD-OBS + 14.0
+        and MJD-OBS tryBetween inputFile.MJD-OBS - 7.5 and inputFile.MJD-OBS + 7.5
+     ;
+
+    recipe flat;
+
+    product MASTER { PRO.CATG="MASTER";}
+}
