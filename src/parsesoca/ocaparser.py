@@ -29,9 +29,9 @@ class OCAParser(Parser):
     def classifiers(self, p):
         return [p.classifier]
 
-    @_('IF clauses THEN "{" exprs "}"')
+    @_('IF clauses THEN "{" statements "}"')
     def classifier(self, p):
-        return p.clauses, p.exprs
+        return p.clauses, p.statements
 
     @_('clauses AND clause')
     def clauses(self, p):
@@ -109,16 +109,16 @@ class OCAParser(Parser):
     def clause(self, p):
         return True
 
-    @_('exprs expr')
-    def exprs(self, p):
-        return p.exprs + [p.expr]
+    @_('statements statement')
+    def statements(self, p):
+        return p.statements + [p.statement]
 
-    @_('expr')
-    def exprs(self, p):
-        return [p.expr]
+    @_('statement')
+    def statements(self, p):
+        return [p.statement]
 
     @_('KEYWORD "=" value ";"')
-    def expr(self, p):
+    def statement(self, p):
         return "=", p.KEYWORD, p.value
 
     @_('organizers organizer')
@@ -301,9 +301,9 @@ class OCAParser(Parser):
     def outputproducts(self, p):
         return [p.outputproduct]
 
-    @_('PRODUCT KEYWORD "{" exprs "}" ')
+    @_('PRODUCT KEYWORD "{" statements "}" ')
     def outputproduct(self, p):
-        return p.KEYWORD, p.exprs
+        return p.KEYWORD, p.statements
 
     def error(self, token):
         raise ValueError(token)
