@@ -269,6 +269,15 @@ action ACTION_SCIENCE
   recipe abcd;
 }
 
+/*
+Multiline comments
+
+if PRO.CATG == "LAB_DARK" then
+{
+    DO.CATG  = "LAB_DARK";
+}
+*/
+
 // From kmos_wkf, with between and trybetween
 action FLAT
 {
@@ -283,3 +292,4 @@ action FLAT
 
     product MASTER { PRO.CATG="MASTER";}
 }
+
