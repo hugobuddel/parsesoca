@@ -99,13 +99,13 @@ class OCAParser(Parser):
     def clause(self, p):
         return "LIKE", p.KEYWORD, p.STRING
 
-    @_('KEYWORD "<" NUMBER')
+    @_('KEYWORD "<" expr')
     def clause(self, p):
-        return "<", p.KEYWORD, p.NUMBER
+        return "<", p.KEYWORD, p.expr
 
-    @_('KEYWORD ">" NUMBER')
+    @_('KEYWORD ">" expr')
     def clause(self, p):
-        return ">", p.KEYWORD, p.NUMBER
+        return ">", p.KEYWORD, p.expr
 
     # TODO: generalize to any type?
     @_('KEYWORD IS TSTRING')

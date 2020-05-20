@@ -131,6 +131,18 @@ action DARKS
 
 }
 
+// Based on vimos_ifu_wkf, > for keywords
+action DARKS
+{
+  minRet=0; maxRet=1;
+  select file as REFERENCE_DARK from inputFiles where
+    MJD-OBS > inputFile.MJD-OBS and OBS.ID==inputFile.OBS.ID;
+
+  recipe dark_combine;
+
+  product MASTER_DARK { PRO.CATG="MASTER_DARK";}
+}
+
 // Based on vimos-casu, many parenthesis, inputFile.MJD-OBS
 action BIAS {
   // select correct reference bias (old or new chips based on MJD)
