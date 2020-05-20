@@ -78,7 +78,7 @@ class OCALexer(Lexer):
     GROUPBY = r'group[ ]+by'
     AS = r'as'
     # TODO: figure out what the AS clause actually means.
-    ASPART = r'\(TPL_A,[ ]*(tpl|grp)\)'
+    ASPART = r'\(TPL_[A-Z],[ ]*(tpl|grp)\)'
 
     ACTION = r'action'
     MINRET = r'minRet'

@@ -86,7 +86,7 @@ select execute(SKY_FLATS) from rawFiles where RAW.TYPE=="FLAT_TWILIGHT"
 
 // Based on HAWKI, with AS
 select execute(SKY_FLATS) from rawFiles where RAW.TYPE=="FLAT_TWILIGHT"
-  group by DET.NCORRS.NAME,DET.DIT,INS.FILT2.NAME,OBS.START as (TPL_A,tpl);
+  group by DET.NCORRS.NAME,DET.DIT,INS.FILT2.NAME,OBS.START as (TPL_D,tpl);
 
 // Based on giraf_wkf_grp_night, with different AS
 select execute(SKY_FLATS) from rawFiles where RAW.TYPE=="FLAT_TWILIGHT"
