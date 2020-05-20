@@ -51,25 +51,29 @@ class OCAParser(Parser):
     def clause(self, p):
         return p.clauses
 
-    @_('KEYWORD EQUALS value')
+    @_('KEYWORD EQUALS expr')
     def clause(self, p):
-        return "==", p.KEYWORD, p.value
+        return "==", p.KEYWORD, p.expr
 
-    @_('KEYWORD NOTEQUALS value')
+    @_('KEYWORD NOTEQUALS expr')
     def clause(self, p):
-        return "!=", p.KEYWORD, p.value
+        return "!=", p.KEYWORD, p.expr
 
-    @_('KEYWORD LESSEQUALS value')
+    @_('KEYWORD LESSEQUALS expr')
     def clause(self, p):
-        return "<=", p.KEYWORD, p.value
+        return "<=", p.KEYWORD, p.expr
 
-    @_('KEYWORD GREATEREQUALS value')
+    @_('KEYWORD GREATEREQUALS expr')
     def clause(self, p):
-        return ">=", p.KEYWORD, p.value
+        return ">=", p.KEYWORD, p.expr
 
-    @_('KEYWORD QEQUALS value')
+    @_('KEYWORD QEQUALS expr')
     def clause(self, p):
-        return "?=", p.KEYWORD, p.value
+        return "?=", p.KEYWORD, p.expr
+
+    @_('value')
+    def expr(self, p):
+        return p.value
 
     @_('STRING')
     def value(self, p):
