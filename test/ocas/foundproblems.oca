@@ -213,6 +213,17 @@ action ACTION_SCIENCE
   recipe abcd;
 }
 
+// Based on vimos_ifu_wkf, recipe with 0 parameters
+action ACTION_SCIENCE
+{
+  minRet=1; maxRet=1;
+  select file as REDUCED from calibFiles where
+    DO.CATG=="REDUCED";
+
+  recipe amber { }
+  product SCIENCE_REDUCED { PRO.CATG="SCIENCE_REDUCED"; }
+}
+
 
 // Based on IFS, only minRet
 action ACTION_SCIENCE

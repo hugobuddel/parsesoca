@@ -250,6 +250,11 @@ class OCAParser(Parser):
     def recipespec(self, p):
         return p.RECIPENAME
 
+    # Recipe with 0 parameters. No ;
+    @_('RECIPE RECIPENAME "{" "}"')
+    def recipespec(self, p):
+        return p.RECIPENAME
+
     # Recipe with parameters. Without ;
     @_('RECIPE RECIPENAME "{" recipeparameters "}"')
     def recipespec(self, p):
