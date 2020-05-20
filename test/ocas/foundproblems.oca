@@ -260,6 +260,15 @@ action ACTION_SCIENCE
   recipe abcd;
 }
 
+// Based on moons, only minRet, but no ;
+action ACTION_SCIENCE
+{
+  minRet=2
+  select file as GAIN from calibFiles where
+    REFLEX.CATG=="GAIN";
+  recipe abcd;
+}
+
 // From kmos_wkf, with between and trybetween
 action FLAT
 {

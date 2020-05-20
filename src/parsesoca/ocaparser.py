@@ -315,8 +315,14 @@ class OCAParser(Parser):
         return ("ACTION", p.NUMBER2, p.NUMBER3, p.caliborinput)
 
     # inputselect with only minret
-    # TODO: moons_wkf does not have the ";" everywhere
     @_('MINRET "=" NUMBER ";" '
+       'SELECT FILE AS KEYWORD '
+       'FROM caliborinput WHERE clauses ";" ')
+    def inputselect(self, p):
+        return ("ACTION", p.NUMBER, 99, p.caliborinput)
+
+    # inputselect with only minret but no ;, just for moons
+    @_('MINRET "=" NUMBER '
        'SELECT FILE AS KEYWORD '
        'FROM caliborinput WHERE clauses ";" ')
     def inputselect(self, p):
