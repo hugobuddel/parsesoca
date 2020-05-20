@@ -194,44 +194,66 @@ class OCAParser(Parser):
     # TODO: Allow for multiple recipes in one action? E.g. molecfit
     @_('ACTION keywordorrecipename "{" '
        'inputselects '
-       'RECIPE RECIPENAME ";" '
+       'recipespec '
        'outputproducts '
        '"}"')
     def action(self, p):
-        return p.keywordorrecipename, p.inputselects, p.RECIPENAME, p.outputproducts
+        return p.keywordorrecipename, p.inputselects, p.recipespec, p.outputproducts
 
     # Action with recipe after outputproducts.
     @_('ACTION keywordorrecipename "{" '
        'inputselects '
        'outputproducts '
-       'RECIPE RECIPENAME ";" '
+       'recipespec '
        '"}"')
     def action(self, p):
-        return p.keywordorrecipename, p.inputselects, p.RECIPENAME, p.outputproducts
+        return p.keywordorrecipename, p.inputselects, p.recipespec, p.outputproducts
 
     # Action without inputselects.
     @_('ACTION keywordorrecipename "{" '
-       'RECIPE RECIPENAME ";" '
+       'recipespec '
        'outputproducts '
        '"}"')
     def action(self, p):
-        return p.keywordorrecipename, p.RECIPENAME, p.outputproducts
+        return p.keywordorrecipename, p.recipespec, p.outputproducts
 
     # Action without outputproducts, is this allowed? This means that the
     # recipe does not produce anything.
     @_('ACTION keywordorrecipename "{" '
        'inputselects '
-       'RECIPE RECIPENAME ";" '
+       'recipespec '
        '"}"')
     def action(self, p):
-        return p.keywordorrecipename, p.inputselects, p.RECIPENAME
+        return p.keywordorrecipename, p.inputselects, p.recipespec
 
     # Action with only a recipe name.
     @_('ACTION keywordorrecipename "{" '
-       'RECIPE RECIPENAME ";" '
+       'recipespec '
        '"}"')
     def action(self, p):
-        return p.keywordorrecipename, p.RECIPENAME
+        return p.keywordorrecipename, p.recipespec
+
+    # Recipe without parameters. With ;
+    @_('RECIPE RECIPENAME ";"')
+    def recipespec(self, p):
+        return p.RECIPENAME
+
+    # Recipe with parameters. Without ;
+    @_('RECIPE RECIPENAME "{" recipeparameters "}"')
+    def recipespec(self, p):
+        return p.RECIPENAME, p.recipeparameters
+
+    @_('recipeparameters recipeparameter')
+    def recipeparameters(self, p):
+        return p.recipeparameters + [p.recipeparameter]
+
+    @_('recipeparameter')
+    def recipeparameters(self, p):
+        return [p.recipeparameter]
+
+    @_('STRING ";"')
+    def recipeparameter(self, p):
+        return p.STRING
 
     # actions can look like recipe names or like keywords....
     @_('KEYWORD')

@@ -189,15 +189,13 @@ action ACTION_SCIENCE_FRINGE
 }
 
 // Based on amber_wkf, uses parameters.
-// TODO: support
 action ACTION_SCIENCE_FRINGE
 {
   minRet=1; maxRet=1;
   select file as P2VM_REDUCED from calibFiles where
     DO.CATG=="P2VM_REDUCED";
 
-// recipe amber_SciCal { "--binning=1"; "--select=FALSE"; }
-  recipe amber_SciCal ;
+  recipe amber_SciCal { "--binning=1"; "--select=FALSE"; }
   product SCIENCE_REDUCED { PRO.CATG="SCIENCE_REDUCED"; }
 }
 
