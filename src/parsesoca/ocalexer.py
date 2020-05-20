@@ -18,6 +18,7 @@ class OCALexer(Lexer):
         NOTEQUALS,
         LESSEQUALS,
         GREATEREQUALS,
+        QEQUALS,
         LIKE,
         AND,
         OR,
@@ -61,6 +62,8 @@ class OCALexer(Lexer):
     NOTEQUALS = r'!='
     LESSEQUALS = r'<='
     GREATEREQUALS = r'>='
+    # TODO, what is ?= ?
+    QEQUALS = r'\?='
     LIKE = r'like'
     AND = r'and'
     OR = r'or'

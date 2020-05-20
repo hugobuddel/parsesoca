@@ -136,6 +136,20 @@ action BIAS {
   recipe bias;
 }
 
+// Based on vimos_ifu_wkf, with ?=
+action SCI_IFU
+{
+  minRet = 1; maxRet = 1;
+  select file as IFU_IDS from calibFiles where
+  PRO.CATG=="IFU_IDS" and ( inputFile.INS.FILT1.NAME?=INS.FILT1.NAME
+    and inputFile.INS.FILT2.NAME?=INS.FILT2.NAME
+     ) and ( inputFile.INS.GRIS1.ID?=INS.GRIS1.ID
+     and inputFile.INS.GRIS2.ID?=INS.GRIS2.ID )
+  ;
+
+  recipe science;
+}
+
 
 // Based on giraf_wkf, different order
 action DARKS

@@ -67,6 +67,10 @@ class OCAParser(Parser):
     def clause(self, p):
         return ">=", p.KEYWORD, p.value
 
+    @_('KEYWORD QEQUALS value')
+    def clause(self, p):
+        return "?=", p.KEYWORD, p.value
+
     @_('STRING')
     def value(self, p):
         return p.STRING
