@@ -229,6 +229,15 @@ class OCAParser(Parser):
     def action(self, p):
         return p.keywordorrecipename, p.inputselects, p.recipespec, p.outputproducts
 
+    # Action with recipe first.
+    @_('ACTION keywordorrecipename "{" '
+       'recipespec '
+       'inputselects '
+       'outputproducts '
+       '"}"')
+    def action(self, p):
+        return p.keywordorrecipename, p.inputselects, p.recipespec, p.outputproducts
+
     # Action without inputselects.
     @_('ACTION keywordorrecipename "{" '
        'recipespec '

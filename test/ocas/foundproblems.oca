@@ -278,7 +278,7 @@ if PRO.CATG == "LAB_DARK" then
 }
 */
 
-// From kmos_wkf, with between and trybetween
+// Based on kmos_wkf, with between and trybetween
 action FLAT
 {
     minRet = 1; maxRet = 1;
@@ -293,3 +293,14 @@ action FLAT
     product MASTER { PRO.CATG="MASTER";}
 }
 
+
+// Based on pacma_offline, with again different order
+action FLAT
+{
+    recipe flat;
+
+    minRet = 1; maxRet = 1;
+    select file as BADPIXEL from calibFiles where PRO.CATG=="BADPIXEL";
+
+    product MASTER { PRO.CATG="MASTER";}
+}
