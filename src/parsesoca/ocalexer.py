@@ -55,7 +55,8 @@ class OCALexer(Lexer):
     #   inputFile.INS.FILT1.NAME == INS.FILT1.NAME
     # "MJD-OBS" is also a keyword.
     # Perhaps this should be refactored?
-    KEYWORD = r'(inputFile.)?(MJD-OBS|[A-Z][A-Z0-9\._]+)'
+    # a-z only for recipes like ABC_DEF_Hij
+    KEYWORD = r'(inputFile.)?(MJD-OBS|[A-Z][A-Za-z0-9\._]+)'
     IF = r'if'
     THEN = r'then'
     EQUALS = r'=='

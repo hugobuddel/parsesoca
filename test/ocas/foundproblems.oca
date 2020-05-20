@@ -105,6 +105,10 @@ select execute(NOISE_COMPUTATION) from inputFiles where
 select execute(NOISE_COMPUTATION) from inputFiles where
     RAW.TYPE == "Norma III";
 
+// Based on ZIMPOL_POL, with weird capitalization
+select execute(ABC_DEF_Hij) from inputFiles where
+    RAW.TYPE == "QRS";
+
 // Based on kmos_wkf, minRet in select execute
 // TODO: does this even make sense?
 minRet=3;
