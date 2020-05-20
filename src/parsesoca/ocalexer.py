@@ -96,7 +96,7 @@ class OCALexer(Lexer):
     TRUE = r'T'
 
     # From https://stackoverflow.com/a/12643073/2097
-    @_(r'[+-]?([0-9]*[.])?[0-9]+')
+    @_(r'[+-]?[0-9]+[.][0-9]*|[+-]?([0-9]*[.])?[0-9]+')
     def NUMBER(self, t):
         # TODO: distinguish int and float?
         t.value = float(t.value)

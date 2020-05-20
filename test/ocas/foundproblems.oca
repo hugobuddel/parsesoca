@@ -11,6 +11,7 @@ if DPR.CATG == "CALIB" and DPR.TECH == "IMAGE" and DPR.TYPE == "DARK"
 if DPR.CATG == "CALIB" and DPR.TECH == "IMAGE" and DPR.TYPE == "DARK"
   and INSTRUME like "%HAWKI%"
   and MJD-OBS >= -.2
+  and MJDOBS >= 3.
   and TPL.NEXP <= -.2 then
 {
   RAW.TYPE = "DA-RK";
