@@ -300,6 +300,16 @@ class OCAParser(Parser):
     def inputselect(self, p):
         return ("ACTION", p.NUMBER0, p.NUMBER1, p.caliborinput)
 
+    # inputselect with accidentally two minret/maxret, e.g. xsh_wkf
+    @_('MINRET "=" NUMBER ";" '
+       'MAXRET "=" NUMBER ";" '
+       'MINRET "=" NUMBER ";" '
+       'MAXRET "=" NUMBER ";" '
+       'SELECT FILE AS KEYWORD '
+       'FROM caliborinput WHERE clauses ";" ')
+    def inputselect(self, p):
+        return ("ACTION", p.NUMBER2, p.NUMBER3, p.caliborinput)
+
     # inputselect with only minret
     # TODO: moons_wkf does not have the ";" everywhere
     @_('MINRET "=" NUMBER ";" '

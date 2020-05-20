@@ -142,6 +142,12 @@ action DARKS
     and (inputFile.MJD-OBS - MJD-OBS) < 0.5
     ;
 
+// based on xsh_wkf, accidentally commented out only the select
+minRet = 0; maxRet = 1;
+//select file as ORD from calibFiles where PRO.CATG=="ORD";
+minRet = 0; maxRet = 1;
+select file as PRD from calibFiles where PRO.CATG=="PRD";
+
   recipe dark_combine;
 
   product MASTER_DARK { PRO.CATG="MASTER_DARK";}
