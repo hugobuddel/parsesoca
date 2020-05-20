@@ -132,12 +132,15 @@ action DARKS
 
 }
 
-// Based on vimos_ifu_wkf, > for keywords
+// Based on vimos_ifu_wkf and xsh_wkf, > for keywords
 action DARKS
 {
   minRet=0; maxRet=1;
-  select file as REFERENCE_DARK from inputFiles where
-    MJD-OBS > inputFile.MJD-OBS and OBS.ID==inputFile.OBS.ID;
+  select file as REFERENCE_DARK from inputFiles
+    where MJD-OBS > inputFile.MJD-OBS and OBS.ID==inputFile.OBS.ID
+    and inputFile.MJD-OBS - MJD-OBS < 0.5
+    and (inputFile.MJD-OBS - MJD-OBS) < 0.5
+    ;
 
   recipe dark_combine;
 

@@ -51,25 +51,29 @@ class OCAParser(Parser):
     def clause(self, p):
         return p.clauses
 
-    @_('KEYWORD EQUALS expr')
+    @_('expr EQUALS expr')
     def clause(self, p):
-        return "==", p.KEYWORD, p.expr
+        return "==", p.expr0, p.expr1
 
-    @_('KEYWORD NOTEQUALS expr')
+    @_('expr NOTEQUALS expr')
     def clause(self, p):
-        return "!=", p.KEYWORD, p.expr
+        return "!=", p.expr0, p.expr1
 
-    @_('KEYWORD LESSEQUALS expr')
+    @_('expr LESSEQUALS expr')
     def clause(self, p):
-        return "<=", p.KEYWORD, p.expr
+        return "<=", p.expr0, p.expr1
 
-    @_('KEYWORD GREATEREQUALS expr')
+    @_('expr GREATEREQUALS expr')
     def clause(self, p):
-        return ">=", p.KEYWORD, p.expr
+        return ">=", p.expr0, p.expr1
 
-    @_('KEYWORD QEQUALS expr')
+    @_('expr QEQUALS expr')
     def clause(self, p):
-        return "?=", p.KEYWORD, p.expr
+        return "?=", p.expr0, p.expr1
+
+    @_('"(" expr ")"')
+    def expr(self, p):
+        return "()", p.expr
 
     @_('value "+" expr')
     def expr(self, p):
@@ -77,7 +81,7 @@ class OCAParser(Parser):
 
     @_('value "-" expr')
     def expr(self, p):
-        return "+", p.value, p.expr
+        return "-", p.value, p.expr
 
     @_('value')
     def expr(self, p):
@@ -99,13 +103,13 @@ class OCAParser(Parser):
     def clause(self, p):
         return "LIKE", p.KEYWORD, p.STRING
 
-    @_('KEYWORD "<" expr')
+    @_('expr "<" expr')
     def clause(self, p):
-        return "<", p.KEYWORD, p.expr
+        return "<", p.expr0, p.expr1
 
-    @_('KEYWORD ">" expr')
+    @_('expr ">" expr')
     def clause(self, p):
-        return ">", p.KEYWORD, p.expr
+        return ">", p.expr0, p.expr1
 
     # TODO: generalize to any type?
     @_('KEYWORD IS TSTRING')
