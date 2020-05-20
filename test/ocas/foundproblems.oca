@@ -125,6 +125,18 @@ action DARKS
 
 }
 
+// Based on vimos-casu, many parenthesis, inputFile.MJD-OBS
+action BIAS {
+  // select correct reference bias (old or new chips based on MJD)
+  minRet=0; maxRet=1;
+  select file as REFERENCE_BIAS from inputFiles where
+    REFLEX.CATG=="REFERENCE_BIAS"
+    and ( ( (MJD-OBS <= 55378.0) and (inputFile.MJD-OBS <= 55378.0) ) or
+          ( (MJD-OBS > 55378.0) and (inputFile.MJD-OBS > 55378.0) ));
+  recipe bias;
+}
+
+
 // Based on giraf_wkf, different order
 action DARKS
 {

@@ -10,7 +10,7 @@ from parsesoca.ocaparser import OCAParser
 
 def do_test_oca_file(fn_oca):
     """Parse an OCA file."""
-
+    print("do_test_oca_file", fn_oca)
     soca = open(fn_oca).read()
 
     soca_clean = "\n".join(
@@ -22,7 +22,8 @@ def do_test_oca_file(fn_oca):
     #     print(token)
 
     myparser = OCAParser()
-    pprint(myparser.parse(mylexer.tokenize(soca_clean)))
+    myparser.parse(mylexer.tokenize(soca_clean))
+    # pprint(myparser.parse(mylexer.tokenize(soca_clean)))
     if hasattr(myparser, 'errorok'):
         assert myparser.errorok, "Error"
 
