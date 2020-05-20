@@ -211,14 +211,28 @@ class OCAParser(Parser):
     def actions(self, p):
         return [p.action]
 
-    # TODO: Allow for multiple recipes in one action? E.g. molecfit
+    # Normal action
     @_('ACTION keywordorrecipename "{" '
        'inputselects '
-       'recipespec '
-       'outputproducts '
+       'recipespecoutputproductss '
        '"}"')
     def action(self, p):
-        return p.keywordorrecipename, p.inputselects, p.recipespec, p.outputproducts
+        # TODO harmonize this output with the other actions
+        return p.keywordorrecipename, p.inputselects, p.recipespecoutputproductss
+
+    # Allow multiple recipes to be defined in one action, e.g. see molecfit_wkf
+    # TODO: is this allowed?
+    @_('recipespecoutputproductss recipespecoutputproducts')
+    def recipespecoutputproductss(self, p):
+        return p.recipespecoutputproductss + [p.recipespecoutputproducts]
+
+    @_('recipespecoutputproducts')
+    def recipespecoutputproductss(self, p):
+        return [p.recipespecoutputproducts]
+
+    @_('recipespec outputproducts')
+    def recipespecoutputproducts(self, p):
+        return p.recipespec, p.outputproducts
 
     # Action with recipe after outputproducts.
     @_('ACTION keywordorrecipename "{" '

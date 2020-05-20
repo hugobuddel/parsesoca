@@ -304,3 +304,15 @@ action FLAT
 
     product MASTER { PRO.CATG="MASTER";}
 }
+
+// Based on molecfit_wkf, with multiple recipes
+action FLAT
+{
+    select file as BADPIXEL from calibFiles where PRO.CATG=="BADPIXEL";
+
+    recipe flat;
+    product MASTER { PRO.CATG="MASTER";}
+
+//    recipe flats;
+//    product MASTERS { PRO.CATG="MASTERS";}
+}
