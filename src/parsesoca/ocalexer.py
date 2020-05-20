@@ -47,7 +47,7 @@ class OCALexer(Lexer):
         PRODUCT,
     }
     literals = {
-        '=', '{', '}', ';', '<', '>', '(', ')', ',',
+        '=', '{', '}', ';', '<', '>', '(', ')', ',', '+', '-',
     }
 
     # A KEYWORD can also be a program name to execute.

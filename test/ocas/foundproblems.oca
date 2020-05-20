@@ -27,6 +27,12 @@ if (DPR.CATG=="CALIB") and DPR.TYPE=="WAVE,3TEL" and
   CATG="CALIB";
 }
 
+// Using a +
+if PRO.PATG >= 4 + 1 - 2 then
+{
+  DO.PATG=PRI.PATG;
+}
+
 
 // Based on cr2re_wkf. Ensures that REFLEX.CATG is always set to something.
 if (T) then
